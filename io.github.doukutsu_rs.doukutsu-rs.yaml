@@ -8,7 +8,7 @@ command: doukutsu-rs
 build-options:
   append-path: /usr/lib/sdk/rust-stable/bin
 finish-args:
-  - --device=dri
+  - --device=all
   - --share=ipc
   - --socket=fallback-x11
   - --socket=pulseaudio
