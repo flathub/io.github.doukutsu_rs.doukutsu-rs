@@ -26,8 +26,7 @@ modules:
       env:
         CARGO_HOME: /run/build/doukutsu-rs/cargo
     build-commands:
-      - mkdir -p /app/share
-      - cp -rp ./game-data /app/share
+      - install -t /app/bin -Dm0755 apply_extra
       - install -Dm0644 res/${FLATPAK_ID}.desktop /app/share/applications/${FLATPAK_ID}.desktop
       - install -Dm0644 res/${FLATPAK_ID}.png /app/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png
       - install -DCm644 res/${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo
@@ -40,10 +39,18 @@ modules:
         url: https://github.com/doukutsu-rs/doukutsu-rs.git
         commit: 60cfc47a212058ef6aae67008e6df5b1c350a0ce
       - cargo-sources.json
-      - type: archive
-        dest: game-data
-        url: https://github.com/doukutsu-rs/game-data/archive/refs/tags/r1.tar.gz
-        sha256: 38c16e0e1dbe6f2b0ab2a3010dccf2ce3a7980b8b8afdc910f55bc0da5b451f5
+      - type: extra-data
+        filename: cavestoryen.zip
+        # Game has not been updated since 2004 and its best to ship data directly from that instead
+        url: https://www.cavestory.org/downloads/cavestoryen.zip
+        sha256: aa87fa30bee9b4980640c7e104791354e0f1f6411ee0d45a70af70046aa0685f
+        size: 1136575
+      - type: script
+        dest-filename: apply_extra
+        commands:
+          - unzip cavestoryen.zip
+          - mv CaveStory/data/* /app/share/game-data
+          - rm -r CaveStory cavestoryen.zip
       - type: script
         dest-filename: doukutsu-rs
         commands:
