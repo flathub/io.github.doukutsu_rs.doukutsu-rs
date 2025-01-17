@@ -26,7 +26,6 @@ modules:
       env:
         CARGO_HOME: /run/build/doukutsu-rs/cargo
     build-commands:
-      - install -t /app/bin -Dm0755 apply_extra
       - install -Dm0644 res/${FLATPAK_ID}.desktop /app/share/applications/${FLATPAK_ID}.desktop
       - install -Dm0644 res/${FLATPAK_ID}.png /app/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png
       - install -DCm644 res/${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo
@@ -34,6 +33,7 @@ modules:
       - cargo --offline build --release --verbose
       - install -Dm0755 ./target/release/doukutsu-rs /app/bin/doukutsu-rs-brokey
       - install -t /app/bin -Dm0755 doukutsu-rs
+      - install -t /app/bin -Dm0755 apply_extra
     sources:
       - type: git
         url: https://github.com/doukutsu-rs/doukutsu-rs.git
@@ -48,9 +48,10 @@ modules:
       - type: script
         dest-filename: apply_extra
         commands:
-          - unzip cavestoryen.zip
-          - mv CaveStory/data/* /app/share/game-data
-          - rm -r CaveStory cavestoryen.zip
+          - unzip -n cavestoryen.zip CaveStory/data/* CaveStory/Doukutsu.exe
+          - mv CaveStory/data /app/share/game-data
+          - mv CaveStory/Doukutsu.exe /app/bin/Doukutsu.exe
+          - rmdir CaveStory
       - type: script
         dest-filename: doukutsu-rs
         commands:
