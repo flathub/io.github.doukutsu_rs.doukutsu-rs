@@ -61,4 +61,5 @@ modules:
             if [ ! -n "$(find $XDG_DATA_HOME/doukutsu-rs/data -prune -empty 2>/dev/null)" ] ; then
               export CAVESTORY_DATA_DIR=$XDG_DATA_HOME/doukutsu-rs/data
             fi
+            export VANILLA_EXT_OUTDIR=$CAVESTORY_DATA_DIR
             exec doukutsu-rs-brokey "$@"
