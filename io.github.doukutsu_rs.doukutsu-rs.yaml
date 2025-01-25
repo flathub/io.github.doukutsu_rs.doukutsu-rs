@@ -26,8 +26,6 @@ modules:
       env:
         CARGO_HOME: /run/build/doukutsu-rs/cargo
     build-commands:
-      - mkdir -p /app/share
-      - cp -rp ./game-data /app/share
       - install -Dm0644 res/${FLATPAK_ID}.desktop /app/share/applications/${FLATPAK_ID}.desktop
       - install -Dm0644 res/${FLATPAK_ID}.png /app/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png
       - install -DCm644 res/${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo
@@ -35,22 +33,32 @@ modules:
       - cargo --offline build --release --verbose
       - install -Dm0755 ./target/release/doukutsu-rs /app/bin/doukutsu-rs-brokey
       - install -t /app/bin -Dm0755 doukutsu-rs
+      - install -t /app/bin -Dm0755 apply_extra
     sources:
       - type: git
         url: https://github.com/doukutsu-rs/doukutsu-rs.git
         commit: 60cfc47a212058ef6aae67008e6df5b1c350a0ce
       - cargo-sources.json
-      - type: archive
-        dest: game-data
+      - type: extra-data
+        filename: game-data.tar.gz
+        # Game data needs to be our patched one because the stage table is on the Doukutsu.exe file and we cant access it
         url: https://github.com/doukutsu-rs/game-data/archive/refs/tags/r1.tar.gz
         sha256: 38c16e0e1dbe6f2b0ab2a3010dccf2ce3a7980b8b8afdc910f55bc0da5b451f5
+        size: 579122
+      - type: script
+        dest-filename: apply_extra
+        commands:
+          - tar xf game-data.tar.gz -C .
+          - mv game-data-r1 data
+          - rm game-data.tar.gz
       - type: script
         dest-filename: doukutsu-rs
         commands:
           - |
-            export CAVESTORY_DATA_DIR="${FORCE_CAVESTORY_DATA_DIR:-/app/share/game-data}"
+            export CAVESTORY_DATA_DIR="${FORCE_CAVESTORY_DATA_DIR:-/app/extra/data}"
             mkdir -p $XDG_DATA_HOME/doukutsu-rs/data
             if [ ! -n "$(find $XDG_DATA_HOME/doukutsu-rs/data -prune -empty 2>/dev/null)" ] ; then
               export CAVESTORY_DATA_DIR=$XDG_DATA_HOME/doukutsu-rs/data
             fi
+            export VANILLA_EXT_OUTDIR=$CAVESTORY_DATA_DIR
             exec doukutsu-rs-brokey "$@"
