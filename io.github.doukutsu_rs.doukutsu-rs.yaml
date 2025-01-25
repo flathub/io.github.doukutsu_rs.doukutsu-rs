@@ -49,8 +49,8 @@ modules:
         dest-filename: apply_extra
         commands:
           - tar xf game-data.tar.gz -C .
-          - mv game-data-r1/* .
-          - rmdir game-data-r1
+          - mv game-data-r1 data
+          - rm game-data.tar.gz
       - type: script
         dest-filename: doukutsu-rs
         commands:
