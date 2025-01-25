@@ -49,14 +49,13 @@ modules:
         dest-filename: apply_extra
         commands:
           - unzip -n cavestoryen.zip CaveStory/data/* CaveStory/Doukutsu.exe
-          - mv CaveStory/data /app/share/game-data
-          - mv CaveStory/Doukutsu.exe /app/bin/Doukutsu.exe
+          - mv CaveStory/* .
           - rmdir CaveStory
       - type: script
         dest-filename: doukutsu-rs
         commands:
           - |
-            export CAVESTORY_DATA_DIR="${FORCE_CAVESTORY_DATA_DIR:-/app/share/game-data}"
+            export CAVESTORY_DATA_DIR="${FORCE_CAVESTORY_DATA_DIR:-/app/extra/data}"
             mkdir -p $XDG_DATA_HOME/doukutsu-rs/data
             if [ ! -n "$(find $XDG_DATA_HOME/doukutsu-rs/data -prune -empty 2>/dev/null)" ] ; then
               export CAVESTORY_DATA_DIR=$XDG_DATA_HOME/doukutsu-rs/data
