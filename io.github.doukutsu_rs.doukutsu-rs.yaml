@@ -35,11 +35,16 @@ modules:
       - install -t /app/bin -Dm0755 doukutsu-rs
       - install -t /app/bin -Dm0755 apply_extra
     sources:
-      - type: git
-        url: https://github.com/doukutsu-rs/doukutsu-rs.git
-        commit: 60cfc47a212058ef6aae67008e6df5b1c350a0ce
+      - type: archive
+        dest-filename: doukutsu-rs-src.tar.gz
+        url: https://api.github.com/repos/doukutsu-rs/doukutsu-rs/tarball/0.102.0-beta7
+        sha256: 32be4ac5a3508f09d4973fd0fa380bc926cde7b3769fe0fc0294f697ee34268e
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/doukutsu-rs/doukutsu-rs/releases/latest
+          version-query: ".tag_name"
+          url-query: '.tarball_url'
       - cargo-sources.json
-
       - type: extra-data
         filename: cavestoryen.zip
         url: https://www.cavestory.org/downloads/cavestoryen.zip
@@ -52,6 +57,11 @@ modules:
         url: https://github.com/doukutsu-rs/vanilla-extractor/releases/download/v1.0.1/vanilla-extractor-1.0.1_linux.x86-64.elf
         sha256: 71dbe1db8fa6a1098624801c36c8d9d903dfd87ab566547c8976dc50b8e5cdee
         size: 528144
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/doukutsu-rs/vanilla-extractor/releases/latest
+          version-query: .tag_name | sub("v" ; "")
+          url-query: .assets[] | select(.name=="vanilla-extractor-" + $version + "_linux.x86-64.elf") | .browser_download_url
       - type: extra-data
         only-arches:
           - aarch64
@@ -59,7 +69,11 @@ modules:
         url: https://github.com/doukutsu-rs/vanilla-extractor/releases/download/v1.0.1/vanilla-extractor-1.0.1_linux.arm64.elf
         sha256: a5390472e7a4b043a8c82efb350f400e3aef63a353fe2eabdd2d977973430369
         size: 518688
-
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/doukutsu-rs/vanilla-extractor/releases/latest
+          version-query: .tag_name | sub("v" ; "")
+          url-query: .assets[] | select(.name=="vanilla-extractor-" + $version + "_linux.arm64.elf") | .browser_download_url
       - type: script
         dest-filename: apply_extra
         commands:
