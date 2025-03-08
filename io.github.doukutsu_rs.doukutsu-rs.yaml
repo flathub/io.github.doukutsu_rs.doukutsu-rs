@@ -36,6 +36,7 @@ modules:
       - install -t /app/bin -Dm0755 apply_extra
     sources:
       - type: archive
+        dest-filename: doukutsu-rs-src.tar.gz
         url: https://api.github.com/repos/doukutsu-rs/doukutsu-rs/tarball/0.102.0-beta7
         sha256: 32be4ac5a3508f09d4973fd0fa380bc926cde7b3769fe0fc0294f697ee34268e
         x-checker-data:
