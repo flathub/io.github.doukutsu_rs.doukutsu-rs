@@ -2,7 +2,7 @@
 
 set -xeuo pipefail
 
-TARGET_DOUKUTSU_VERSION="${1:-0.102.0-beta7}"
+TARGET_DOUKUTSU_VERSION="${1:-37aa3f36aac72dcf75cb82cb1e96d87bdc4fe8f5}"
 TARGET_EXTRACTOR_VERSION="${1:-1.0.1}"
 
 DOUKUTSU_LOCK_FILE_DIR=$(mktemp -d)
@@ -14,7 +14,8 @@ cleanup() {
 
 trap cleanup EXIT
 
-curl -fsSL "https://github.com/doukutsu-rs/doukutsu-rs/archive/refs/tags/${TARGET_DOUKUTSU_VERSION}.tar.gz" | tar xzf - -C "$DOUKUTSU_LOCK_FILE_DIR"
+# curl -fsSL "https://github.com/doukutsu-rs/doukutsu-rs/archive/refs/tags/${TARGET_DOUKUTSU_VERSION}.tar.gz" | tar xzf - -C "$DOUKUTSU_LOCK_FILE_DIR"
+curl -fsSL "https://github.com/doukutsu-rs/doukutsu-rs/archive/${TARGET_DOUKUTSU_VERSION}.tar.gz" |  tar xzf - -C "$DOUKUTSU_LOCK_FILE_DIR"
 podman run --rm -it \
   -v .:/tmp/build:Z \
   -v "$DOUKUTSU_LOCK_FILE_DIR:$DOUKUTSU_LOCK_FILE_DIR:Z" \
