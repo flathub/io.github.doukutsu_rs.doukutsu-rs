@@ -1,6 +1,6 @@
 app-id: io.github.doukutsu_rs.doukutsu-rs
 runtime: org.freedesktop.Platform
-runtime-version: "24.08"
+runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
@@ -42,8 +42,8 @@ modules:
         x-checker-data:
           type: json
           url: https://api.github.com/repos/doukutsu-rs/doukutsu-rs/releases/latest
-          version-query: ".tag_name"
-          url-query: '.tarball_url'
+          version-query: .tag_name
+          url-query: .tarball_url
       - cargo-sources.json
       - type: extra-data
         filename: cavestoryen.zip
@@ -54,26 +54,28 @@ modules:
         only-arches:
           - x86_64
         filename: vanilla-extractor.elf
-        url: https://github.com/doukutsu-rs/vanilla-extractor/releases/download/v1.0.1/vanilla-extractor-1.0.1_linux.x86-64.elf
-        sha256: 71dbe1db8fa6a1098624801c36c8d9d903dfd87ab566547c8976dc50b8e5cdee
-        size: 528144
+        url: https://github.com/doukutsu-rs/vanilla-extractor/releases/download/v1.0.2/vanilla-extractor-1.0.2_linux.x86-64.elf
+        sha256: c81133ffd8eb60d2e7a59db516d6e69e2fc570bcb02b2a4437eefdf7cabba2bd
+        size: 512352
         x-checker-data:
           type: json
           url: https://api.github.com/repos/doukutsu-rs/vanilla-extractor/releases/latest
           version-query: .tag_name | sub("v" ; "")
-          url-query: .assets[] | select(.name=="vanilla-extractor-" + $version + "_linux.x86-64.elf") | .browser_download_url
+          url-query: .assets[] | select(.name=="vanilla-extractor-" + $version + "_linux.x86-64.elf")
+            | .browser_download_url
       - type: extra-data
         only-arches:
           - aarch64
         filename: vanilla-extractor.elf
-        url: https://github.com/doukutsu-rs/vanilla-extractor/releases/download/v1.0.1/vanilla-extractor-1.0.1_linux.arm64.elf
-        sha256: a5390472e7a4b043a8c82efb350f400e3aef63a353fe2eabdd2d977973430369
-        size: 518688
+        url: https://github.com/doukutsu-rs/vanilla-extractor/releases/download/v1.0.2/vanilla-extractor-1.0.2_linux.arm64.elf
+        sha256: 0481dd4f14dc01bd5671f4821da5be77e7378a9808612e38ac964da80264e698
+        size: 536664
         x-checker-data:
           type: json
           url: https://api.github.com/repos/doukutsu-rs/vanilla-extractor/releases/latest
           version-query: .tag_name | sub("v" ; "")
-          url-query: .assets[] | select(.name=="vanilla-extractor-" + $version + "_linux.arm64.elf") | .browser_download_url
+          url-query: .assets[] | select(.name=="vanilla-extractor-" + $version + "_linux.arm64.elf")
+            | .browser_download_url
       - type: script
         dest-filename: apply_extra
         commands:
