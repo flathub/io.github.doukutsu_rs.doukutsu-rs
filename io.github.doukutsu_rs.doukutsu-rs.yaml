@@ -81,9 +81,9 @@ modules:
           - install -Dpm0755 -t "${FLATPAK_DEST}/bin/" ./target/release/vanilla-extractor
         sources:
           - type: archive
-            url: https://api.github.com/repos/doukutsu-rs/vanilla-extractor/tarball/v1.0.1
+            url: https://api.github.com/repos/doukutsu-rs/vanilla-extractor/tarball/v1.0.2
             archive-type: tar-gzip
-            sha256: 8258d8f8f87af9c51792adb943ecce0b7dc5a9128141830e983f76b2c2411be7
+            sha256: 7672d90d48c6e2fae2edf57b59fa5b03432bd9f992297834a60c55147e6e39b3
             x-checker-data:
               type: json
               url: https://api.github.com/repos/doukutsu-rs/vanilla-extractor/releases/latest
