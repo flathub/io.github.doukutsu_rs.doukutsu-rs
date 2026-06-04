@@ -33,20 +33,16 @@ modules:
       - install -Dpm0755 -t "${FLATPAK_DEST}/bin/" doukutsu-rs apply_extra
       - install -Dpm0755 ./target/release/doukutsu-rs "${FLATPAK_DEST}/bin/doukutsu-rs-binary"
     sources:
-      - type: git
-        url: https://github.com/doukutsu-rs/doukutsu-rs
-        commit: 37aa3f36aac72dcf75cb82cb1e96d87bdc4fe8f5
-      # FIXME: Revert to beta(s) once beta8 is released!
-      # - type: archive
-      #   archive-type: tar-gzip
-      #   url: https://api.github.com/repos/doukutsu-rs/doukutsu-rs/tarball/0.102.0-beta7
-      #   sha256: 32be4ac5a3508f09d4973fd0fa380bc926cde7b3769fe0fc0294f697ee34268e
-      #   x-checker-data:
-      #     type: json
-      #     url: https://api.github.com/repos/doukutsu-rs/doukutsu-rs/releases/latest
-      #     version-query: .tag_name | sub("^v"; "")
-      #     timestamp-query: .published_at
-      #     url-query: .tarball_url
+      - type: archive
+        archive-type: tar-gzip
+        url: https://api.github.com/repos/doukutsu-rs/doukutsu-rs/tarball/1.0.0
+        sha256: b35aa4f1c71d1d163e3dba43505c41f6c960c5fdb91cc24ff20d186dd6b0d558
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/doukutsu-rs/doukutsu-rs/releases/latest
+          version-query: .tag_name | sub("^v"; "")
+          timestamp-query: .published_at
+          url-query: .tarball_url
       - cargo-sources-doukutsu.json
       - type: extra-data
         filename: cavestoryen.zip
